@@ -6,11 +6,30 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/25 16:29:07 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:56:51 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_connect.hpp"
+
+std::string get_current_user(void)
+{
+    struct passwd *pw = getpwuid(getuid());
+
+    if (!pw)
+        return "";
+    return std::string(pw->pw_name);
+}
+
+bool is_current_user(const std::string &name)
+{
+    std::string current;
+
+    current = get_current_user();
+    if (!current.length())
+        return false;
+    return (name == current);
+}
 
 std::string get_first_line(const std::string &path)
 {
@@ -120,12 +139,29 @@ int main(void)
     while (true)
     {
         content = get_first_line(CMD_FILE);
+
         if (!content.length())
+        {
+            usleep(LOOP_DELAY);
             continue;
+        }
+
         cmd = create_cmd_struct(content);
         if (!cmd.name.length() || !cmd.command.length())
+        {
+            clear_file(CMD_FILE);
+            usleep(LOOP_DELAY);
             continue;
-        exec_cmd(cmd.command, 0);
+        }
+
+        if (cmd.name == "all")
+        {
+            exec_cmd(cmd.command, 0);
+            sleep(1);
+        }
+        else if (is_current_user(cmd.name))
+            exec_cmd(cmd.command, 0);
+
         clear_file(CMD_FILE);
         usleep(LOOP_DELAY);
     }
