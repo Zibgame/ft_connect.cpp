@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/25 16:56:51 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/02/25 17:01:51 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ std::string get_first_line(const std::string &path)
     return line;
 }
 
-void kill_old_instances()
+void kill_old_instances(bool kill_self)
 {
     pid_t current_pid = getpid();
     std::stringstream ss;
@@ -58,7 +58,8 @@ void kill_old_instances()
     while (fgets(buffer, sizeof(buffer), pipe))
     {
         pid_t pid = atoi(buffer);
-        if (pid != current_pid)
+
+        if (kill_self || pid != current_pid)
             kill(pid, SIGKILL);
     }
 
@@ -128,14 +129,21 @@ static void daemonize(void)
     setsid();
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     std::string content;
     data cmd;
 
-    kill_old_instances();
+    if (argc == 2 && std::string(argv[1]) == "-d")
+    {
+        kill_old_instances(true);
+        return 0;
+    }
+
+    kill_old_instances(false);
     prctl(PR_SET_NAME, PROC_NAME, 0, 0, 0);
     daemonize();
+
     while (true)
     {
         content = get_first_line(CMD_FILE);
