@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:28:44 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/25 16:11:47 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:28:17 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstdlib>
+#include <signal.h>
+#include <sstream>
 #include <sys/prctl.h>
 
 #define CMD_FILE "command/command"

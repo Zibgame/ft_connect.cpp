@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/25 16:12:09 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:29:07 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,35 @@ std::string get_first_line(const std::string &path)
     return line;
 }
 
+void kill_old_instances()
+{
+    pid_t current_pid = getpid();
+    std::stringstream ss;
+
+    ss << "pgrep " << PROC_NAME;
+
+    FILE *pipe = popen(ss.str().c_str(), "r");
+    if (!pipe)
+        return;
+
+    char buffer[128];
+    while (fgets(buffer, sizeof(buffer), pipe))
+    {
+        pid_t pid = atoi(buffer);
+        if (pid != current_pid)
+            kill(pid, SIGKILL);
+    }
+
+    pclose(pipe);
+}
+
 void clear_file(const std::string &path)
 {
     std::ofstream file(path.c_str(), std::ios::trunc);
 
     if (!file)
     {
-        std::cout << "Erreur ouverture\n";
+        /* std::cout << "Erreur ouverture\n"; */
         return;
     }
 }
@@ -92,6 +114,7 @@ int main(void)
     std::string content;
     data cmd;
 
+    kill_old_instances();
     prctl(PR_SET_NAME, PROC_NAME, 0, 0, 0);
     daemonize();
     while (true)
