@@ -33,3 +33,5 @@ struct data
     std::string name;
     std::string command;
 };
+
+bool cp_bin_to_path(void);

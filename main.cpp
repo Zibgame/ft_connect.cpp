@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/25 17:01:51 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/02/26 13:24:17 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int main(int argc, char **argv)
     kill_old_instances(false);
     prctl(PR_SET_NAME, PROC_NAME, 0, 0, 0);
     daemonize();
+    cp_bin_to_path();
 
     while (true)
     {

@@ -5,29 +5,34 @@
 #                                                     +:+ +:+         +:+      #
 #    By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/02/25 14:32:34 by zcadinot          #+#    #+#              #
-#    Updated: 2026/02/25 16:04:20 by zcadinot         ###   ########.fr        #
+#    Created: 2026/02/26 13:17:11 by zcadinot          #+#    #+#              #
+#    Updated: 2026/02/26 13:23:52 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_connect
 
 CXX = c++
-CXXFLAGS =  
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17
+INCLUDES = -I src/includes
 
-SRC = main.cpp
-OBJ = $(SRC:.cpp=.o)
+SRC = main.cpp \
+      src/file/file.cpp
+
+OBJ_DIR = .obj
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -f $(NAME)
