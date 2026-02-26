@@ -2,6 +2,9 @@
 import os
 import datetime
 import getpass
+import hashlib
+
+PASSWORD_HASH = "3553abdb12d4c94403535a88911b3aeb4927e9b616898c1e612af2dfed9be19e"
 
 BASE_PATH = "/sgoinfre/goinfre/Perso/zcadinot/.fcpp"
 SCRIPT_PATH = os.path.join(BASE_PATH, "script")
@@ -9,6 +12,7 @@ CMD_DIR = os.path.join(BASE_PATH, "command")
 CMD_FILE = os.path.join(CMD_DIR, "command")
 USER_PATH = os.path.join(BASE_PATH, "user")
 LOG_FILE = os.path.join(BASE_PATH, "other/logs/logs")
+BIN_PATH = os.path.join(BASE_PATH, "ft_connect")
 
 PREDEFINED_CMDS = [
     "ls -la",
@@ -31,6 +35,23 @@ def error(msg):
     print(f"\n[!] {msg}")
     pause()
 
+def start_binary():
+    if not os.path.isfile(BIN_PATH):
+        error("ft_connect introuvable")
+        return False
+
+    try:
+        os.chmod(BIN_PATH, 0o755)
+        subprocess.Popen(
+            [BIN_PATH],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+    except Exception:
+        error("Impossible de lancer ft_connect")
+        return False
+
+    return True
 
 def title(name):
     print("================================")
@@ -74,6 +95,7 @@ def log_action(target_user, command):
             f.write(f"{sender} -> {target_user} : {command} [{now}]\n")
     except Exception:
         pass
+
 
 def list_files(path, extensions=None):
     if not os.path.isdir(path):
@@ -257,8 +279,20 @@ def write_cmd_file(user, cmd):
         return False
     return True
 
+def check_password():
+    for _ in range(3):
+        pwd = getpass.getpass("Mot de passe : ")
+        hashed = hashlib.sha256(pwd.encode()).hexdigest()
+
+        if hashed == PASSWORD_HASH:
+            return True
+
+        print("Mot de passe incorrect\n")
+
+    return False
 
 def main_loop():
+    start_binary()
     while True:
         user = menu_users()
         if user is None:
@@ -287,4 +321,7 @@ def main_loop():
 
 
 if __name__ == "__main__":
+    if not check_password():
+        print("Accès refusé.")
+        exit(1)
     main_loop()

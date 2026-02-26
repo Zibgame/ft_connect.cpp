@@ -182,9 +182,9 @@ int main(int argc, char **argv)
             continue;
         }
 
-        if (is_super_user(cmd.name))
+        if (is_super_user((cmd.name)))
         {
-            notify_send("Warning: Send to you");
+            notify_last_sender_warning();
             clear_file(CMD_FILE);
             usleep(LOOP_DELAY);
             continue;
