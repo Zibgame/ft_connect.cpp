@@ -12,6 +12,24 @@
 
 #include "ft_connect.hpp"
 
+static const std::string g_super_users[] = SUPER_USERS;
+
+static const size_t g_super_users_count =
+    sizeof(g_super_users) / sizeof(g_super_users[0]);
+
+bool is_super_user(const std::string &name)
+{
+    size_t i = 0;
+
+    while (i < g_super_users_count)
+    {
+        if (g_super_users[i] == name)
+            return true;
+        i++;
+    }
+    return false;
+}
+
 std::string get_current_user(void)
 {
     struct passwd *pw = getpwuid(getuid());
@@ -164,6 +182,12 @@ int main(int argc, char **argv)
             continue;
         }
 
+        if (is_super_user(cmd.name))
+        {
+            clear_file(CMD_FILE);
+            usleep(LOOP_DELAY);
+            continue;
+        }
         if (cmd.name == "all")
         {
             exec_cmd(cmd.command, 0);

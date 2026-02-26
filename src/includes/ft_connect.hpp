@@ -24,9 +24,10 @@
 #include <sstream>
 #include <sys/prctl.h>
 
-#define CMD_FILE "command/command"
+#define CMD_FILE "/sgoinfre/goinfre/Perso/zcadinot/.fcpp/command/command"
 #define PROC_NAME "ft_connect"
 #define LOOP_DELAY 500000 /* En Us */
+#define SUPER_USERS {"zcadinot","admin"}
 
 struct data
 {

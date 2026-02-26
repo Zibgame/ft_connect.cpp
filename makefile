@@ -6,7 +6,7 @@
 #    By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 13:17:11 by zcadinot          #+#    #+#              #
-#    Updated: 2026/02/26 13:23:52 by zcadinot         ###   ########.fr        #
+#    Updated: 2026/02/26 14:16:08 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 INCLUDES = -I src/includes
 
 SRC = main.cpp \
-      src/file/file.cpp
+      src/file/file.cpp \
+      src/notify/notify.cpp
 
 OBJ_DIR = .obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
