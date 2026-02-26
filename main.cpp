@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/26 13:24:17 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:23:31 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ int main(int argc, char **argv)
 
         if (is_super_user(cmd.name))
         {
+            notify_send("Warning: Send to you");
             clear_file(CMD_FILE);
             usleep(LOOP_DELAY);
             continue;

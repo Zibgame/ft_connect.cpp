@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:28:44 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/25 16:53:05 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:22:27 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,6 @@ struct data
 
 bool cp_bin_to_path(void);
 bool create_user_file(void);
+bool notify_send(const std::string &message);
+std::string get_last_sender(void);
+void notify_last_sender_warning(void);

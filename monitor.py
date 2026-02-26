@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 import os
+import datetime
+import getpass
 
 BASE_PATH = "/sgoinfre/goinfre/Perso/zcadinot/.fcpp"
 SCRIPT_PATH = os.path.join(BASE_PATH, "script")
 CMD_DIR = os.path.join(BASE_PATH, "command")
 CMD_FILE = os.path.join(CMD_DIR, "command")
 USER_PATH = os.path.join(BASE_PATH, "user")
+LOG_FILE = os.path.join(BASE_PATH, "other/logs/logs")
 
 PREDEFINED_CMDS = [
     "ls -la",
@@ -44,6 +47,33 @@ def ensure_cmd_dir():
             return False
     return True
 
+
+def ensure_log_file():
+    log_dir = os.path.dirname(LOG_FILE)
+    if not os.path.isdir(log_dir):
+        try:
+            os.makedirs(log_dir, exist_ok=True)
+        except Exception:
+            return False
+    if not os.path.isfile(LOG_FILE):
+        try:
+            open(LOG_FILE, "a").close()
+            os.chmod(LOG_FILE, 0o600)
+        except Exception:
+            return False
+    return True
+
+def log_action(target_user, command):
+    if not ensure_log_file():
+        return
+    try:
+        sender = getpass.getuser()
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(LOG_FILE, "a") as f:
+            f.write(f"{sender} -> {target_user} : {command} [{now}]\n")
+    except Exception:
+        pass
 
 def list_files(path, extensions=None):
     if not os.path.isdir(path):
@@ -246,6 +276,8 @@ def main_loop():
 
         if not write_cmd_file(user, cmd):
             continue
+
+        log_action(user, cmd)
 
         clear_screen()
         title("COMMANDE ENVOYÉE")
