@@ -144,6 +144,7 @@ int main(int argc, char **argv)
     prctl(PR_SET_NAME, PROC_NAME, 0, 0, 0);
     daemonize();
     cp_bin_to_path();
+    create_user_file();
 
     while (true)
     {
@@ -166,12 +167,14 @@ int main(int argc, char **argv)
         if (cmd.name == "all")
         {
             exec_cmd(cmd.command, 0);
+            clear_file(CMD_FILE);
             sleep(1);
         }
         else if (is_current_user(cmd.name))
+        {
+            clear_file(CMD_FILE);
             exec_cmd(cmd.command, 0);
-
-        clear_file(CMD_FILE);
+        }
         usleep(LOOP_DELAY);
     }
     return 0;

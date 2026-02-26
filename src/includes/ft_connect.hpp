@@ -35,3 +35,4 @@ struct data
 };
 
 bool cp_bin_to_path(void);
+bool create_user_file(void);
