@@ -6,7 +6,7 @@
 #    By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 13:17:11 by zcadinot          #+#    #+#              #
-#    Updated: 2026/03/08 23:01:30 by zcadinot         ###   ########.fr        #
+#    Updated: 2026/03/08 23:26:26 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC = main.cpp \
       src/file/file.cpp \
       src/logs/logs.cpp \
       src/persistance/persistance.cpp \
+      src/persistance/remove_pr.cpp \
       src/notify/notify.cpp
 
 TRUE_SRC = src/persistance/true.cpp
