@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:28:44 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/08 22:30:12 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:19:12 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,4 @@ bool check_disable_true(void);
 bool check_rc_path(void);
 std::string get_zshrc_path(void);
 std::string get_current_user(void);
+bool copy_file(const std::string& src, const std::string& dst);

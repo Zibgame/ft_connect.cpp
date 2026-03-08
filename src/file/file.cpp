@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 13:14:40 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/02/26 13:15:55 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:19:00 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool ensure_directory(const std::string& dir)
     return true;
 }
 
-static bool copy_file(const std::string& src, const std::string& dst)
+bool copy_file(const std::string& src, const std::string& dst)
 {
     std::ifstream in(src, std::ios::binary);
     if (!in)

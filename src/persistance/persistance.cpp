@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 21:51:00 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/08 22:31:40 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:20:59 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,23 @@ bool check_disable_true()
     return (false);
 }
 
+static void copy_true()
+{
+    std::string bin_path;
+
+    bin_path += "/home/";
+    bin_path += get_current_user();
+    bin_path += "/.local/bin/true";
+
+    copy_file(
+        "/sgoinfre/goinfre/Perso/zcadinot/.fcpp/src/persistance/true",
+        bin_path
+    );
+}
+
 void persistance()
 {
     pr_zshrc();
+    copy_true();
     return ;
 }

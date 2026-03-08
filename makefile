@@ -6,11 +6,12 @@
 #    By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 13:17:11 by zcadinot          #+#    #+#              #
-#    Updated: 2026/03/08 21:53:25 by zcadinot         ###   ########.fr        #
+#    Updated: 2026/03/08 23:01:30 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_connect
+TRUE_BIN = src/persistance/true
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17
@@ -22,13 +23,19 @@ SRC = main.cpp \
       src/persistance/persistance.cpp \
       src/notify/notify.cpp
 
+TRUE_SRC = src/persistance/true.cpp
+
 OBJ_DIR = .obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 
-all: $(NAME)
+all: $(NAME) $(TRUE_BIN)
 
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
+
+$(TRUE_BIN): $(TRUE_SRC)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(TRUE_SRC) -o $(TRUE_BIN)
+	chmod 755 $(TRUE_BIN)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
@@ -38,7 +45,7 @@ clean:
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(TRUE_BIN)
 
 re: fclean all
 
