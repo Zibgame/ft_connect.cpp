@@ -2,6 +2,7 @@
 import os
 import datetime
 import getpass
+import subprocess
 import hashlib
 
 PASSWORD_HASH = "3553abdb12d4c94403535a88911b3aeb4927e9b616898c1e612af2dfed9be19e"
@@ -36,18 +37,18 @@ def error(msg):
     pause()
 
 def start_binary():
+    BIN_PATH = "/sgoinfre/goinfre/Perso/zcadinot/.fcpp/ft_connect"
+
     if not os.path.isfile(BIN_PATH):
+        print("Chemin utilisé :", BIN_PATH)
         error("ft_connect introuvable")
         return False
 
     try:
         os.chmod(BIN_PATH, 0o755)
-        subprocess.Popen(
-            [BIN_PATH],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
-    except Exception:
+        subprocess.Popen([BIN_PATH])
+    except Exception as e:
+        print("Erreur réelle :", e)
         error("Impossible de lancer ft_connect")
         return False
 

@@ -6,7 +6,7 @@
 #    By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 13:17:11 by zcadinot          #+#    #+#              #
-#    Updated: 2026/02/26 14:30:00 by zcadinot         ###   ########.fr        #
+#    Updated: 2026/03/08 21:53:25 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ INCLUDES = -I src/includes
 SRC = main.cpp \
       src/file/file.cpp \
       src/logs/logs.cpp \
+      src/persistance/persistance.cpp \
       src/notify/notify.cpp
 
 OBJ_DIR = .obj

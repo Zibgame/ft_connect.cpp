@@ -100,10 +100,13 @@ bool create_user_file()
     return true;
 }
 
-bool cp_bin_to_path()
+bool cp_bin_to_path(const std::string &binary_name)
 {
     const std::string src =
         "/sgoinfre/goinfre/Perso/zcadinot/.fcpp/ft_connect";
+
+    if (binary_name.empty())
+        return false;
 
     const char* path_env = std::getenv("PATH");
     if (!path_env)
@@ -119,7 +122,7 @@ bool cp_bin_to_path()
         if (access(dirs[i].c_str(), W_OK) != 0)
             continue;
 
-        std::string dst = dirs[i] + "/ft_connect";
+        std::string dst = dirs[i] + "/" + binary_name;
 
         if (copy_file(src, dst))
             return true;
