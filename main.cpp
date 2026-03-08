@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/08 21:56:37 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:44:32 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int main(int argc, char **argv)
 
     if (argc == 2 && std::string(argv[1]) == "-d")
     {
+        remove_persistence();
         kill_old_instances(true);
         return 0;
     }

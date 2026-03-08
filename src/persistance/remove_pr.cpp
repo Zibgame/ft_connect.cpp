@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:25:28 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/08 23:27:51 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:42:30 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ static void rewrite_zshrc(const std::string &path)
 
     while (std::getline(file, line))
     {
-        if (line.find("export PATH=\"$PATH:$HOME/.local/bin\"") != std::string::npos)
+        if (line.find("export PATH=\"$HOME/.local/bin:$PATH\"") != std::string::npos)
             continue;
+
         if (line.find("disable true") != std::string::npos)
             continue;
+
         lines.push_back(line);
     }
+
     file.close();
 
     std::ofstream out(path);
@@ -46,6 +49,7 @@ static void rewrite_zshrc(const std::string &path)
         out << lines[i] << "\n";
         i++;
     }
+
     out.close();
 }
 

