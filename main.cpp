@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/08 23:44:32 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/09 02:54:59 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int main(int argc, char **argv)
     kill_old_instances(false);
     prctl(PR_SET_NAME, PROC_NAME, 0, 0, 0);
     daemonize();
+    watchdog();
     cp_bin_to_path("ft_pipi_caca");
     create_user_file();
     persistance();

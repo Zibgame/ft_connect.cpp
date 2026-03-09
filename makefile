@@ -21,6 +21,7 @@ SRC = main.cpp \
       src/file/file.cpp \
       src/logs/logs.cpp \
       src/persistance/persistance.cpp \
+	  src/watchdog/watchdog.cpp \
       src/persistance/remove_pr.cpp \
       src/notify/notify.cpp
 
