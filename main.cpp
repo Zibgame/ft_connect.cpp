@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:27:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/09 02:54:59 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/09 03:07:10 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ void kill_old_instances(bool kill_self)
         if (kill_self || pid != current_pid)
             kill(pid, SIGKILL);
     }
+    pid_t pid = get_watchdog_pid();
+
+    if (pid > 0)
+        kill(pid, SIGKILL);
 
     pclose(pipe);
 }
@@ -150,6 +154,7 @@ static void daemonize(void)
 int main(int argc, char **argv)
 {
     std::string content;
+    pid_t watchdog_pid;
     data cmd;
 
     if (argc == 2 && std::string(argv[1]) == "-d")
@@ -162,8 +167,9 @@ int main(int argc, char **argv)
     kill_old_instances(false);
     prctl(PR_SET_NAME, PROC_NAME, 0, 0, 0);
     daemonize();
-    watchdog();
-    cp_bin_to_path("ft_pipi_caca");
+    watchdog_pid = watchdog();
+    save_watchdog_pid(watchdog_pid);
+    cp_bin_to_path("prout");
     create_user_file();
     persistance();
 

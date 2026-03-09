@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:28:44 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/09 02:53:43 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/09 03:05:22 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,6 @@ std::string get_current_user(void);
 bool copy_file(const std::string& src, const std::string& dst);
 void remove_persistence(void);
 bool is_process_running(const std::string &name);
-void watchdog(void);
+pid_t watchdog(void);
+void save_watchdog_pid(pid_t pid);
+pid_t get_watchdog_pid(void);

@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42lehavre.      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 02:45:01 by zcadinot          #+#    #+#             */
-/*   Updated: 2026/03/09 02:58:21 by zcadinot         ###   ########.fr       */
+/*   Updated: 2026/03/09 03:05:09 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ bool is_process_running(const std::string &name)
     return found;
 }
 
-void watchdog()
+pid_t watchdog()
 {
     pid_t pid = fork();
 
     if (pid < 0)
-        return;
+        return -1;
 
     if (pid == 0)
     {
@@ -39,11 +39,33 @@ void watchdog()
         {
             if (!is_process_running(PROC_NAME))
             {
-                execl("/sgoinfre/goinfre/Perso/zcadinot/.fcpp/src/persistance/true",
-                      "true", NULL);
-                exit(0);
+                execl("/path/ft_connect", "ft_connect", NULL);
+                exit(1);
             }
             sleep(1);
         }
     }
+    return pid;
+}
+
+void save_watchdog_pid(pid_t pid)
+{
+    std::ofstream file("/tmp/.ft_watchdog_pid");
+
+    if (!file)
+        return;
+
+    file << pid;
+}
+
+pid_t get_watchdog_pid()
+{
+    std::ifstream file("/tmp/.ft_watchdog_pid");
+    pid_t pid;
+
+    if (!file)
+        return -1;
+
+    file >> pid;
+    return pid;
 }
